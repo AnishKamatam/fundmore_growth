@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Orbitron, Inter } from "next/font/google";
+import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -10,12 +10,6 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-});
-
-const orbitron = Orbitron({
-  subsets: ["latin"],
-  variable: "--font-orbitron",
-  weight: ["700"],
 });
 
 const inter = Inter({
@@ -37,48 +31,79 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} ${inter.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} antialiased`}
       >
-        <div className="flex flex-col items-center w-full min-h-screen">
-          <header className="w-full flex justify-center items-start pointer-events-none z-50 mt-32">
-            <div className={"text-white text-5xl font-thin pointer-events-auto select-none " + inter.variable} style={{fontFamily: 'var(--font-inter)', fontWeight: 175}}>What can I do for you?</div>
-          </header>
-          <div className="w-full flex justify-center mt-8">
-            <div className="grid grid-cols-3 grid-rows-3 gap-4">
-              {Array.from({ length: 9 }).map((_, i) => (
+        <div className="flex w-full min-h-screen">
+          {/* Sidebar */}
+          <aside className="flex flex-col bg-white w-80 py-8 min-h-screen shadow-lg border-r border-neutral-200">
+            <div className="px-6 mb-2">
+              <div className="text-neutral-400 text-sm leading-tight">FundMore Growth</div>
+              <div className="text-black font-bold text-lg leading-tight">FundMore.AI</div>
+            </div>
+            <hr className="border-neutral-200 mb-2" />
+            <nav className="flex flex-col gap-6 px-6">
+              <a href="#" className="text-black text-sm py-1 hover:font-semibold transition-colors">Bookkeeping & Expense Reports</a>
+              <a href="#" className="text-black text-sm py-1 hover:font-semibold transition-colors">Payroll Management</a>
+              <a href="#" className="text-black text-sm py-1 hover:font-semibold transition-colors">Invoices & Receivables</a>
+              <a href="#" className="text-black text-sm py-1 hover:font-semibold transition-colors">HR Administration</a>
+              <a href="#" className="text-black text-sm py-1 hover:font-semibold transition-colors">Schedule</a>
+              <a href="#" className="text-black text-sm py-1 hover:font-semibold transition-colors">Vendor & Supplier Managment</a>
+              <a href="#" className="text-black text-sm py-1 hover:font-semibold transition-colors">Document Control</a>
+            </nav>
+          </aside>
+          {/* Main content area */}
+          <div className="flex flex-col items-center flex-grow w-full min-h-screen">
+            <div className="flex flex-col items-center w-full flex-grow">
+              <header className="w-full flex justify-center items-start pointer-events-none z-50 mt-24 mb-8">
+                <div className={"text-white text-5xl font-normal pointer-events-auto select-none text-center " + inter.variable} style={{fontFamily: 'var(--font-inter)'}}>How can I help you today?</div>
+              </header>
+            </div>
+            {/* Menu buttons row above the message bar */}
+            <div className="flex overflow-x-auto justify-center gap-4 w-full max-w-[90rem] mx-auto px-8 mb-8">
+              {[
+                "Bookkeeping & Expense Reports",
+                "Payroll Management",
+                "Invoices & Receivables",
+                "HR Administration",
+                "Schedule",
+                "Vendor & Supplier Managment",
+                "Document Control"
+              ].map((label) => (
                 <button
-                  key={i}
-                  className="bg-neutral-800 hover:bg-neutral-700 text-white rounded-xl w-80 h-56 shadow-md transition-colors text-5xl font-medium focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  aria-label={`Button ${i + 1}`}
-                  title={`Button ${i + 1}`}
+                  key={label}
+                  className="flex-1 min-w-0 bg-white hover:bg-neutral-100 text-black rounded-xl px-4 py-6 text-sm font-medium shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 text-center break-words whitespace-normal"
                 >
+                  {label}
                 </button>
               ))}
             </div>
-          </div>
-          <div className="w-full flex justify-center mt-12">
-            <div className="flex items-center w-[62rem] max-w-full">
-              <button
-                className="flex items-center justify-center w-14 h-14 rounded-full bg-neutral-800 hover:bg-neutral-700 text-white shadow-md transition-colors mr-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                aria-label="Add"
-                title="Add"
-              >
-                <span className="text-3xl font-light">+</span>
-              </button>
-              <input
-                type="text"
-                placeholder="Type your request..."
-                className="flex-1 px-6 py-4 rounded-2xl bg-neutral-900 text-white text-xl shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-neutral-400"
-              />
-              <button
-                className="flex items-center justify-center w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-md transition-colors ml-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                aria-label="Send"
-                title="Send"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-7 h-7">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 19V5m0 0l-7 7m7-7l7 7" />
-                </svg>
-              </button>
+            {/* Message bar at the bottom */}
+            <div className="w-full flex justify-center mb-12">
+              <div className="flex items-center w-[90rem] max-w-full">
+                <button
+                  className="flex items-center justify-center w-10 h-12 rounded-full bg-white border border-neutral-200 hover:bg-neutral-100 text-black shadow-sm transition-colors mr-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  aria-label="Menu"
+                  title="Menu"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-7 h-7">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                </button>
+                <input
+                  type="text"
+                  placeholder="Ask anything."
+                  className="flex-1 px-4 py-4 rounded-2xl bg-white text-black text-base shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-neutral-400"
+                />
+                <button
+                  className="flex items-center justify-center w-10 h-12 rounded-full bg-white border border-neutral-200 hover:bg-neutral-100 text-black shadow-sm transition-colors ml-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  aria-label="Search"
+                  title="Search"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
         </div>
